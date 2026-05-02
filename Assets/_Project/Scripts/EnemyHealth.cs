@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour 
 {
     public float health = 1f;
-    public float timeReward = 5f; // Earning time back on kill
+    public float timeReward = 5f; // Base time earned back on kill
 
     public void TakeDamage(float amount) 
     {
@@ -16,10 +16,20 @@ public class EnemyHealth : MonoBehaviour
 
     void Die() 
     {
-        // Add time reward to the game clock
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.UpdateTimer(timeReward);
+            float finalReward = timeReward;
+
+            // Apply Upgrade 3: Double Base Rewards
+            if (GameManager.Instance.hasBoughtUpgrade3)
+            {
+                finalReward *= 2f; 
+            }
+
+            // Apply Upgrade 1: Flat Bonus Time
+            finalReward += GameManager.Instance.bonusTimePerKill;
+
+            GameManager.Instance.UpdateTimer(finalReward);
         }
         
         Destroy(gameObject);

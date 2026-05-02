@@ -3,12 +3,21 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    
     public float currentTimer = 100f;
     public int currentLayer = 1;
 
+    [Header("Upgrade Variables")]
+    public float bonusTimePerKill = 0f;    // Upgraded via Shop
+    public float timerDrainRate = 1f;      // Upgraded via Shop
+
+    [Header("Purchase Tracking")]
+    public bool hasBoughtUpgrade1 = false;
+    public bool hasBoughtUpgrade2 = false;
+    public bool hasBoughtUpgrade3 = false;
+
     void Awake() 
     { 
-        // This ensures only one GameManager exists and it survives scene loads
         if (Instance == null)
         {
             Instance = this; 
@@ -22,8 +31,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // Decrease timer by 1 real-world second every second
-        currentTimer -= Time.deltaTime;
+        // Timer decreases based on the drain rate (Upgrade 2 slows this down)
+        currentTimer -= Time.deltaTime * timerDrainRate;
 
         // Check for Game Over
         if (currentTimer <= 0)
