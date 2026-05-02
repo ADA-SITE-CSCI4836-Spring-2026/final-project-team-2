@@ -12,6 +12,15 @@ public class GameManager : MonoBehaviour
     [Header("Game Over Scene")]
     public string gameOverSceneName; // set from inspector
 
+    [Header("Upgrade Variables")]
+    public float bonusTimePerKill = 0f;    // Upgraded via Shop
+    public float timerDrainRate = 1f;      // Upgraded via Shop
+
+    [Header("Purchase Tracking")]
+    public bool hasBoughtUpgrade1 = false;
+    public bool hasBoughtUpgrade2 = false;
+    public bool hasBoughtUpgrade3 = false;
+
     private bool isGameOver = false;
 
     void Awake()
@@ -31,7 +40,7 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-        currentTimer -= Time.deltaTime;
+        currentTimer -= Time.deltaTime * timerDrainRate;
 
         if (currentTimer <= 0)
         {

@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI; // Needed to click Buttons
+using UnityEngine.UI; 
 
 public class TraderLogic : MonoBehaviour
 {
@@ -31,54 +31,84 @@ public class TraderLogic : MonoBehaviour
 
         activeUI = Instantiate(traderUIPrefab);
 
-        // Hook up the Exit Button
+        // --- EXIT BUTTON ---
         Transform exitTransform = activeUI.transform.Find("Background_Panel/Exit_Button");
         if (exitTransform != null)
         {
-            Button exitBtn = exitTransform.GetComponent<Button>();
-            exitBtn.onClick.AddListener(CloseTraderMenu);
+            exitTransform.GetComponent<Button>().onClick.AddListener(CloseTraderMenu);
         }
 
-        // Hook up the Upgrade Button
-        Transform upgradeTransform = activeUI.transform.Find("Background_Panel/Upgrade_Button_1");
-        if (upgradeTransform != null)
+        // --- UPGRADE 1: Bonus +5s on Kill ---
+        Transform upg1 = activeUI.transform.Find("Background_Panel/Upgrade_Button_1");
+        if (upg1 != null)
         {
-            Button upgrade1Btn = upgradeTransform.GetComponent<Button>();
-            upgrade1Btn.onClick.AddListener(BuyTimeOnKillUpgrade);
+            if (GameManager.Instance.hasBoughtUpgrade1) upg1.gameObject.SetActive(false);
+            else upg1.GetComponent<Button>().onClick.AddListener(BuyUpgrade1);
+        }
+
+        // --- UPGRADE 2: Slower Clock ---
+        Transform upg2 = activeUI.transform.Find("Background_Panel/Upgrade_Button_2");
+        if (upg2 != null)
+        {
+            if (GameManager.Instance.hasBoughtUpgrade2) upg2.gameObject.SetActive(false);
+            else upg2.GetComponent<Button>().onClick.AddListener(BuyUpgrade2);
+        }
+
+        // --- UPGRADE 3: Double Base Rewards ---
+        Transform upg3 = activeUI.transform.Find("Background_Panel/Upgrade_Button_3");
+        if (upg3 != null)
+        {
+            if (GameManager.Instance.hasBoughtUpgrade3) upg3.gameObject.SetActive(false);
+            else upg3.GetComponent<Button>().onClick.AddListener(BuyUpgrade3);
         }
     }
 
     public void CloseTraderMenu()
     {
-        if (activeUI != null)
-        {
-            Destroy(activeUI);
-        }
+        if (activeUI != null) Destroy(activeUI);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1f;
     }
 
-    // THIS IS THE NEW PURCHASE LOGIC
-    public void BuyTimeOnKillUpgrade()
+    // --- PURCHASE LOGIC ---
+
+    public void BuyUpgrade1()
     {
-        // 1. Check if the player has at least 20 seconds to spend
         if (GameManager.Instance != null && GameManager.Instance.currentTimer >= 20f)
         {
-            // 2. Deduct the time!
             GameManager.Instance.UpdateTimer(-20f);
 
-            GameManager.Instance.timeOnKillBonus += 5f;
+            GameManager.Instance.bonusTimePerKill += 5f;
+            GameManager.Instance.hasBoughtUpgrade1 = true;
 
-            Debug.Log("SUCCESS: You bought +5s Time on Kill!");
-            
-            // 3. Close the menu automatically after buying
+            Debug.Log("Bought Upgrade 1: +5s on Kill");
+
+            CloseTraderMenu();
+        }
+    }
+
+    public void BuyUpgrade2()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.currentTimer >= 30f)
+        {
+            GameManager.Instance.UpdateTimer(-30f);
+            GameManager.Instance.timerDrainRate = 0.7f; // Clock ticks at 70% speed
+            GameManager.Instance.hasBoughtUpgrade2 = true;
+            Debug.Log("Bought Upgrade 2: Slower Clock");
             CloseTraderMenu(); 
         }
-        else
+    }
+
+    public void BuyUpgrade3()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.currentTimer >= 40f)
         {
-            Debug.Log("FAILED: Not enough time or GameManager missing!");
+            GameManager.Instance.UpdateTimer(-40f);
+            GameManager.Instance.hasBoughtUpgrade3 = true;
+            Debug.Log("Bought Upgrade 3: Double Rewards");
+            CloseTraderMenu(); 
         }
     }
 }
