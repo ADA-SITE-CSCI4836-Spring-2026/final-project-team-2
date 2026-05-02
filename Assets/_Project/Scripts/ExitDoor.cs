@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // We need this to load different scenes!
+using UnityEngine.SceneManagement;
 
 public class ExitDoor : MonoBehaviour
 {
@@ -8,13 +8,18 @@ public class ExitDoor : MonoBehaviour
         // Did the player touch the door?
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Level Complete! Loading the Map...");
+            Debug.Log("Level Complete! Advancing Layer...");
             
-            // Unpause the game just in case the Trader menu left it paused
+            // 1. Unpause the game just in case the Trader menu left it paused
             Time.timeScale = 1f;
 
-            // Load Scene 1 (Your Map Menu)
-            // Ensure Scene 1 is added to your Build Settings!
+            // 2. Increase the Layer by 1 in the GameManager
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.currentLayer++;
+            }
+
+            // 3. Load Scene 1 (The Map Menu)
             SceneManager.LoadScene(1);
         }
     }

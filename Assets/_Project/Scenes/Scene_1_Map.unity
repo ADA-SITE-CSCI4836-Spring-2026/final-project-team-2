@@ -356,12 +356,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1863626399}
         m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
-        m_MethodName: OnNodeClicked
-        m_Mode: 1
+        m_MethodName: LoadSpecificLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -714,12 +714,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1863626399}
         m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
-        m_MethodName: OnNodeClicked
-        m_Mode: 1
+        m_MethodName: LoadSpecificLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -955,6 +955,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c85f3edc85d4e439a6a2c8c4989b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer1Nodes:
+  - {fileID: 865224023}
+  layer2Nodes:
+  - {fileID: 1681642019}
+  layer3Nodes:
+  - {fileID: 2031611194}
 --- !u!1 &1905654209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,12 +1221,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1863626399}
         m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
-        m_MethodName: OnNodeClicked
-        m_Mode: 1
+        m_MethodName: LoadSpecificLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
