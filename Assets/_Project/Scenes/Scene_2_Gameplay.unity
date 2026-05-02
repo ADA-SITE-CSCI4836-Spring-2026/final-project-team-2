@@ -629,6 +629,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTimer: 100
   currentLayer: 1
+  isTimerRunning: 0
+  bonusTimePerKill: 0
+  timerDrainRate: 1
+  hasBoughtUpgrade1: 0
+  hasBoughtUpgrade2: 0
+  hasBoughtUpgrade3: 0
 --- !u!4 &1143487488
 Transform:
   m_ObjectHideFlags: 0
@@ -641,8 +647,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1151343946}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1151343943
@@ -711,7 +716,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1143487488}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1682507058
 PrefabInstance:
@@ -928,6 +933,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1151343946}
   - {fileID: 617265612}
   - {fileID: 166179617}
   - {fileID: 144183874}

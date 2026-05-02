@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI; 
+using UnityEngine.EventSystems; // Needed to check for the EventSystem
 
 public class TraderLogic : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class TraderLogic : MonoBehaviour
 
     private void OpenTraderMenu()
     {
+        // 1. CRITICAL SAFETY CHECK: UI will be dead without an Event System!
+        if (FindObjectOfType<EventSystem>() == null)
+        {
+            Debug.LogError("CRITICAL: There is no EventSystem in your scene! UI Buttons will not click. Right click Hierarchy -> UI -> Event System.");
+        }
+
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -25,20 +32,19 @@ public class TraderLogic : MonoBehaviour
 
         // --- EXIT BUTTON ---
         Transform exitTransform = activeUI.transform.Find("Background_Panel/Exit_Button");
-        if (exitTransform != null)
-        {
-            exitTransform.GetComponent<Button>().onClick.AddListener(CloseTraderMenu);
-        }
+        if (exitTransform != null) exitTransform.GetComponent<Button>().onClick.AddListener(CloseTraderMenu);
+        else Debug.LogError("Could not find Exit_Button! Check prefab spelling.");
 
-        // --- UPGRADE 1: Bonus +5s on Kill ---
+        // --- UPGRADE 1 ---
         Transform upg1 = activeUI.transform.Find("Background_Panel/Upgrade_Button_1");
         if (upg1 != null)
         {
             if (GameManager.Instance.hasBoughtUpgrade1) upg1.gameObject.SetActive(false);
             else upg1.GetComponent<Button>().onClick.AddListener(BuyUpgrade1);
         }
+        else Debug.LogError("Could not find Upgrade_Button_1!");
 
-        // --- UPGRADE 2: Slower Clock ---
+        // --- UPGRADE 2 ---
         Transform upg2 = activeUI.transform.Find("Background_Panel/Upgrade_Button_2");
         if (upg2 != null)
         {
@@ -46,7 +52,7 @@ public class TraderLogic : MonoBehaviour
             else upg2.GetComponent<Button>().onClick.AddListener(BuyUpgrade2);
         }
 
-        // --- UPGRADE 3: Double Base Rewards ---
+        // --- UPGRADE 3 ---
         Transform upg3 = activeUI.transform.Find("Background_Panel/Upgrade_Button_3");
         if (upg3 != null)
         {
@@ -73,9 +79,9 @@ public class TraderLogic : MonoBehaviour
             GameManager.Instance.UpdateTimer(-20f);
             GameManager.Instance.bonusTimePerKill += 5f;
             GameManager.Instance.hasBoughtUpgrade1 = true;
-            Debug.Log("Bought Upgrade 1: +5s on Kill");
             CloseTraderMenu(); 
         }
+        else Debug.Log("Not enough time to buy!");
     }
 
     public void BuyUpgrade2()
@@ -83,11 +89,11 @@ public class TraderLogic : MonoBehaviour
         if (GameManager.Instance != null && GameManager.Instance.currentTimer >= 30f)
         {
             GameManager.Instance.UpdateTimer(-30f);
-            GameManager.Instance.timerDrainRate = 0.7f; // Clock ticks at 70% speed
+            GameManager.Instance.timerDrainRate = 0.7f; 
             GameManager.Instance.hasBoughtUpgrade2 = true;
-            Debug.Log("Bought Upgrade 2: Slower Clock");
             CloseTraderMenu(); 
         }
+        else Debug.Log("Not enough time to buy!");
     }
 
     public void BuyUpgrade3()
@@ -96,8 +102,8 @@ public class TraderLogic : MonoBehaviour
         {
             GameManager.Instance.UpdateTimer(-40f);
             GameManager.Instance.hasBoughtUpgrade3 = true;
-            Debug.Log("Bought Upgrade 3: Double Rewards");
             CloseTraderMenu(); 
         }
+        else Debug.Log("Not enough time to buy!");
     }
 }
