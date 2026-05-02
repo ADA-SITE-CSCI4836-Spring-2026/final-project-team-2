@@ -3,13 +3,16 @@ using UnityEngine;
 public class EnemyMelee : MonoBehaviour
 {
     public float speed = 5f;
+    public float damageAmount = 10f; 
+    public float attackCooldown = 1.5f;
+    
     private Transform player;
+    private float lastAttackTime;
 
     void Start()
     {
-        // Find the player automatically when the enemy spawns
         GameObject playerObj = GameObject.FindWithTag("Player");
-        if (playerObj != null)
+        if (playerObj != null) 
         {
             player = playerObj.transform;
         }
@@ -19,14 +22,29 @@ public class EnemyMelee : MonoBehaviour
     {
         if (player != null)
         {
-            // Calculate direction to player
-            Vector3 direction = (player.position - transform.position).normalized;
+            // Stay on the floor: lock Y position
+            Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
+            transform.LookAt(targetPos);
             
-            // Look at the player (Y remains unchanged so they don't tilt into the floor)
-            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
-            
-            // Move toward the player
-            transform.position += direction * speed * Time.deltaTime;
+            // Move toward player
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+        }
+    }
+
+    // We use OnTriggerStay because the colliders are now set to "Is Trigger"
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (Time.time > lastAttackTime + attackCooldown)
+            {
+                if (GameManager.Instance != null) 
+                {
+                    GameManager.Instance.UpdateTimer(-damageAmount);
+                    lastAttackTime = Time.time;
+                    Debug.Log("Melee Hit! Time Lost.");
+                }
+            }
         }
     }
 }

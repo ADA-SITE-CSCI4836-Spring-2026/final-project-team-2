@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - Trader
   - TimeOrb
+  - EnemySpawn
   layers:
   - Default
   - TransparentFX

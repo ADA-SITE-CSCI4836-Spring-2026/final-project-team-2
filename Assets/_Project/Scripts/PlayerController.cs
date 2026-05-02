@@ -47,9 +47,11 @@ public class PlayerController : MonoBehaviour
         // ---------------- COMBAT (SHOOTING) ----------------
         if (Input.GetButtonDown("Fire1")) 
         {
-            if (bulletPrefab != null && firePoint != null)
+            if (bulletPrefab != null && firePoint != null && playerCamera != null)
             {
-                Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+                // We use playerCamera.rotation instead of firePoint.rotation
+                // This makes the bullet fly exactly where the center of screen is looking!
+                Instantiate(bulletPrefab, firePoint.position, playerCamera.rotation);
             }
         }
 
