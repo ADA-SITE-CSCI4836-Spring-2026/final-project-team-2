@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpHeight: 3
+  jumpHeight: 5
   mouseSensitivity: 200
   playerCamera: {fileID: 5553961987905455106}
   bulletPrefab: {fileID: 2823705365143710935, guid: 820e5839f7b046246a95dfa2421aa5e7, type: 3}

@@ -8,6 +8,7 @@ public class MapManager : MonoBehaviour
     public Button[] layer1Nodes;
     public Button[] layer2Nodes;
     public Button[] layer3Nodes;
+    public Button[] layer4Nodes;
 
     void Start()
     {
@@ -31,11 +32,13 @@ public class MapManager : MonoBehaviour
         SetButtonsState(layer1Nodes, false);
         SetButtonsState(layer2Nodes, false);
         SetButtonsState(layer3Nodes, false);
+        SetButtonsState(layer4Nodes, false);
 
         // Unlock ONLY the layer the player is currently on
         if (currentLayer == 1) SetButtonsState(layer1Nodes, true);
         else if (currentLayer == 2) SetButtonsState(layer2Nodes, true);
         else if (currentLayer == 3) SetButtonsState(layer3Nodes, true);
+        else if (currentLayer == 4) SetButtonsState(layer4Nodes, true);
         else 
         {
             Debug.Log("YOU BEAT THE GAME!"); 
