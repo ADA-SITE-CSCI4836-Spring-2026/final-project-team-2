@@ -11,7 +11,15 @@ public class TraderLogic : MonoBehaviour
     {
         if (other.CompareTag("Player") && activeUI == null)
         {
-            OpenTraderMenu();
+            // CHECK TIME BEFORE OPENING
+            if (GameManager.Instance != null && GameManager.Instance.currentTimer >= 20f)
+            {
+                OpenTraderMenu();
+            }
+            else
+            {
+                Debug.Log("Not enough time to open trader (need 20s)");
+            }
         }
     }
 

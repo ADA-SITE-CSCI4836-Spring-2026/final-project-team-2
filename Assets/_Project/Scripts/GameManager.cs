@@ -1,19 +1,25 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
     public float currentTimer = 100f;
     public int currentLayer = 1;
     public float timeOnKillBonus = 0f;
 
-    void Awake() 
-    { 
-        // This ensures only one GameManager exists and it survives scene loads
+    [Header("Game Over Scene")]
+    public string gameOverSceneName; // set from inspector
+
+    private bool isGameOver = false;
+
+    void Awake()
+    {
         if (Instance == null)
         {
-            Instance = this; 
-            DontDestroyOnLoad(gameObject); 
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -23,20 +29,23 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // Decrease timer by 1 real-world second every second
+        if (isGameOver) return;
+
         currentTimer -= Time.deltaTime;
 
-        // Check for Game Over
         if (currentTimer <= 0)
         {
             currentTimer = 0;
+            isGameOver = true;
+
             Debug.Log("GAME OVER! Time ran out.");
-            // Later we will load the Menu scene here
+
+            SceneManager.LoadScene(gameOverSceneName);
         }
     }
-    
-    public void UpdateTimer(float amount) 
-    { 
-        currentTimer += amount; 
+
+    public void UpdateTimer(float amount)
+    {
+        currentTimer += amount;
     }
 }
