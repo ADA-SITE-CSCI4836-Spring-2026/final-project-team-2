@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public float currentTimer = 100f;
     public int currentLayer = 1;
+    public float timeOnKillBonus = 0f;
 
     void Awake() 
     { 

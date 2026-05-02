@@ -14,14 +14,16 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    void Die() 
+    void Die()
     {
-        // Add time reward to the game clock
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.UpdateTimer(timeReward);
+            float finalReward = timeReward + GameManager.Instance.timeOnKillBonus;
+            GameManager.Instance.UpdateTimer(finalReward);
+
+            Debug.Log("Enemy killed. Time added: " + finalReward);
         }
-        
+
         Destroy(gameObject);
     }
 }

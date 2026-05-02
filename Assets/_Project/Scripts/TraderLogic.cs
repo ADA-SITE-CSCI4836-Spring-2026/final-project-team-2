@@ -60,7 +60,9 @@ public class TraderLogic : MonoBehaviour
         {
             // 2. Deduct the time!
             GameManager.Instance.UpdateTimer(-20f);
-            
+
+            GameManager.Instance.timeOnKillBonus += 5f;
+
             Debug.Log("SUCCESS: You bought +5s Time on Kill!");
             
             // 3. Close the menu automatically after buying
