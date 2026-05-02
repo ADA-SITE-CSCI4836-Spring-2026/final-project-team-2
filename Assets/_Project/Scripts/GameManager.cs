@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public int currentLayer = 1;
     
     [Header("Timer State")]
-    public bool isTimerRunning = false; // NEW: Controls if the clock is ticking
+    public bool isTimerRunning = false; // Controls if the clock is ticking
 
     [Header("Upgrade Variables")]
     public float bonusTimePerKill = 0f;    
@@ -45,7 +45,14 @@ public class GameManager : MonoBehaviour
             currentTimer = 0;
             Debug.Log("GAME OVER! Time ran out. Returning to Main Menu...");
             
+            // 1. Manually reset stats so nothing misreads them during the scene transition
             ResetGameStats();
+
+            // 2. Destroy this run's data completely for the "True Reset"
+            Destroy(gameObject);
+            Instance = null;
+            
+            // 3. Load the Main Menu (Scene 0)
             SceneManager.LoadScene(0);
         }
     }
@@ -55,7 +62,8 @@ public class GameManager : MonoBehaviour
         currentTimer += amount; 
     }
 
-    private void ResetGameStats()
+    // Kept this public just in case you ever add a "Restart Run" button in a pause menu later!
+    public void ResetGameStats()
     {
         currentTimer = 100f;
         currentLayer = 1;
