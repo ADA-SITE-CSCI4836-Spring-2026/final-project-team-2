@@ -273,8 +273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9739a857b6256bb44b948d7b086fe3a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  jumpHeight: 5
+  speed: 15
+  jumpHeight: 6.7
   mouseSensitivity: 200
   playerCamera: {fileID: 5553961987905455106}
   bulletPrefab: {fileID: 2823705365143710935, guid: 820e5839f7b046246a95dfa2421aa5e7, type: 3}
